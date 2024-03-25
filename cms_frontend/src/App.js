@@ -1,78 +1,108 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Admin from "./layouts/Admin";
+import "./styles/custom.css";
+import "./styles/sidebar.css";
+import Auth from "./layouts/Auth";
+import api from "./config/URL";
+import { updateScreens } from "./config/ScreenFilter";
+import { toast } from "react-toastify";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const isAuthenticatedFromStorage =
+      sessionStorage.getItem("isAuthenticated");
+    if (isAuthenticatedFromStorage === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogin = async (email, password) => {
+    setIsLoading(true); // Set loading state to true during login process
+
+    try {
+      let userId, userName;
+      switch (email) {
+        case "admin@artylearning.sg":
+          if (password === "12345678") {
+            userId = 1;
+            userName = "Admin";
+          }
+          break;
+        case "branchadmin@artylearning.sg":
+          if (password === "12345678") {
+            userId = 2;
+            userName = "Branch Admin";
+          }
+          break;
+        case "staff@artylearning.sg":
+          if (password === "12345678") {
+            userId = 4;
+            userName = "Staff";
+          }
+          break;
+        case "staffadmin@artylearning.sg":
+          if (password === "12345678") {
+            userId = 5;
+            userName = "Staff Admin";
+          }
+          break;
+        case "teacher@artylearning.sg":
+          if (password === "12345678") {
+            userId = 6;
+            userName = "Teacher";
+          }
+          break;
+        default:
+          setIsLoading(false);
+          return toast.error("Invalid email or password"); // Default to ID 3 for other users
+      }
+      if (userId) {
+        const response = await api.get(`/getAllRoleInfoById/${userId}`);
+        const rolePermissions = response.data;
+        updateScreens(rolePermissions);
+        setIsAuthenticated(true);
+        sessionStorage.setItem("isAuthenticated", true);
+        sessionStorage.setItem("userName", userName);
+      } else {
+        setIsLoading(false);
+        toast.error("Invalid email or password");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+
+    sessionStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("screens");
+    sessionStorage.removeItem("userName");
+  };
+
   return (
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          Navbar
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-                Home
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Dropdown
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" aria-disabled="true">
-                Disabled
-              </a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <p>9941286931</p>
-          </form>
+    <div>
+      {isLoading ? (
+        <div className="loader-container">
+          <div class="loading">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
-      </div>
-    </nav>
+      ) : isAuthenticated ? (
+        <Admin handleLogout={handleLogout} />
+      ) : (
+        <Auth handleLogin={handleLogin} />
+      )}
+    </div>
   );
 }
 
