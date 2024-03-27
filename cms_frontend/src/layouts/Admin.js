@@ -1,41 +1,34 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Header from "../Components/Admin/Header";
+import Sidebar from "../Components/Admin/Sidebar";
+import Content from "../Components/Admin/Content";
+import Footer from "../Components/Admin/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "../styles/sidebar.css";
-import "boxicons/css/boxicons.min.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import Dashboard from "../pages/Dashboard";
-import Sidebar from "../components/common/Sidebar";
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
-import { ToastContainer } from "react-bootstrap";
+import Settings from "../Components/Admin/Settings";
+import "../Styles/admin/Admin.css";
+import AdminHome from "../Pages/admin/AdminHome";
+import AdminAbout from "../Pages/admin/AdminAbout";
 
-
-function Admin({ handleLogout }) {
-  useEffect(() => {
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".sidebarBtn");
-    sidebarBtn.onclick = function () {
-      sidebar.classList.toggle("active");
-      if (sidebar.classList.contains("active")) {
-        sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
-      } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-    };
-  }, []);
-
+function Admin() {
   return (
-    <div>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
       <BrowserRouter>
-        <ToastContainer position="top-center" />
-        <Sidebar />
-        <section className="home-section">
-          <Header onLogout={handleLogout} />
-          <div className="home-content" style={{ minHeight: "95vh" }}>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-            </Routes>
+        <Header />
+        <Settings />
+
+        <div class="app-main">
+          <Sidebar />
+          <div class="app-main__outer">
+            <div className="minHeight">
+              <Routes>
+                <Route path="/" element={<Content />} />
+                <Route path="/admin/home" element={<AdminHome />} />
+                <Route path="/admin/about" element={<AdminAbout />} />
+              </Routes>
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </section>
+        </div>
       </BrowserRouter>
     </div>
   );
