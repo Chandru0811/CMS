@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -79,6 +80,12 @@ function Login({ onLogin }) {
                         <a class="small" href="register.html">
                           Create an Account!
                         </a>
+                      </div>
+                      <div class="text-center mt-4">
+                        <Link to="/">
+                          <IoArrowBack />
+                          Back to Home
+                        </Link>
                       </div>
                     </div>
                   </div>

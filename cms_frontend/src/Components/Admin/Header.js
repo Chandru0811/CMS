@@ -4,8 +4,14 @@ import profile from "../../Assets/profile-1.png";
 import Logo from "../../Assets/Logo.png";
 import { MdAccountCircle } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
-function Header() {
+function Header({ onLogout }) {
+  const navigate = useNavigate();
+  const handelLogout = () => {
+    onLogout();
+    navigate("/");
+  };
   return (
     <div class="app-header header-shadow">
       <div class="app-header__logo">
@@ -117,7 +123,12 @@ function Header() {
                         User Account
                       </button>
                       <div tabindex="-1" class="dropdown-divider"></div>
-                      <button type="button" tabindex="0" class="dropdown-item">
+                      <button
+                        onClick={handelLogout}
+                        type="button"
+                        tabindex="0"
+                        class="dropdown-item"
+                      >
                         <IoLogOut className="header-logo" /> &nbsp;&nbsp; Logout
                       </button>
                     </div>

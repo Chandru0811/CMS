@@ -7,12 +7,26 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../Styles/admin/Admin.css";
 import AdminHome from "../Pages/admin/AdminHome";
 import AdminAbout from "../Pages/admin/AdminAbout";
+import { ToastContainer } from "react-toastify";
+import AdminService from "../Pages/admin/AdminService";
+import Doctor from "../Pages/admin/Doctor/Doctor";
+import DoctorAdd from "../Pages/admin/Doctor/DoctorAdd";
+import DoctorEdit from "../Pages/admin/Doctor/DoctorEdit";
+import DoctorView from "../Pages/admin/Doctor/DoctorView";
+import Review from "../Pages/admin/Review/Review";
+import ReviewAdd from "../Pages/admin/Review/ReviewAdd";
+import ReviewEdit from "../Pages/admin/Review/ReviewEdit";
+import ReviewView from "../Pages/admin/Review/ReviewView";
+// import Settings from "../Components/Admin/Settings";
 
-function Admin() {
+function Admin({ handleLogout }) {
   return (
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
       <BrowserRouter>
-        <Header />
+        <ToastContainer position="top-center" />
+
+        <Header onLogout={handleLogout} />
+        {/* <Settings /> */}
 
         <div class="app-main">
           <Sidebar />
@@ -22,6 +36,21 @@ function Admin() {
                 <Route path="/" element={<Content />} />
                 <Route path="/admin/home" element={<AdminHome />} />
                 <Route path="/admin/about" element={<AdminAbout />} />
+                <Route path="/admin/service" element={<AdminService />} />
+
+                {/* Doctor  */}
+                <Route path="/admin/doctor" element={<Doctor />} />
+                <Route path="/admin/doctor/add" element={<DoctorAdd />} />
+                <Route path="/admin/doctor/edit" element={<DoctorEdit />} />
+                <Route path="/admin/doctor/view" element={<DoctorView />} />
+
+                {/* Review  */}
+                <Route path="/admin/review" element={<Review />} />
+                <Route path="/admin/review/add" element={<ReviewAdd />} />
+                <Route path="/admin/review/edit" element={<ReviewEdit />} />
+                <Route path="/admin/review/view" element={<ReviewView />} />
+
+                <Route path="*" element={<Content />} />
               </Routes>
             </div>
             <Footer />
