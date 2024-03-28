@@ -1,31 +1,27 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCommentDots,
-  faBars,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { IoLogIn } from "react-icons/io5";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "../Styles/Navbar.css";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  // const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const openNav = () => {
     setNav(!nav);
   };
 
-  const handleChatBtnClick = () => {
-    if (!isButtonDisabled) {
-      toast.info("Experiencing high traffic, Please wait a moment.", {
-        position: toast.POSITION.TOP_CENTER,
-        onOpen: () => setIsButtonDisabled(true),
-        onClose: () => setIsButtonDisabled(false),
-      });
-    }
-  };
+  // const handleChatBtnClick = () => {
+  //   if (!isButtonDisabled) {
+  //     toast.info("Experiencing high traffic, Please wait a moment.", {
+  //       position: toast.POSITION.TOP_CENTER,
+  //       onOpen: () => setIsButtonDisabled(true),
+  //       onClose: () => setIsButtonDisabled(false),
+  //     });
+  //   }
+  // };
 
   return (
     <div className="navbar-section">
@@ -64,15 +60,11 @@ function Navbar() {
         </li>
       </ul>
 
-      <button
-        className="navbar-btn"
-        type="button"
-        disabled={isButtonDisabled}
-        onClick={handleChatBtnClick}
-      >
-        <FontAwesomeIcon icon={faCommentDots} /> Live Chat
-      </button>
-
+      <Link to="/login">
+        <button className="navbar-btn" type="button">
+          <IoLogIn /> Login
+        </button>
+      </Link>
       {/* Mobile */}
       <div className={`mobile-navbar ${nav ? "open-nav" : ""}`}>
         <div onClick={openNav} className="mobile-navbar-close">

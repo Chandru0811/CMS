@@ -4,7 +4,6 @@ import Sidebar from "../Components/Admin/Sidebar";
 import Content from "../Components/Admin/Content";
 import Footer from "../Components/Admin/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Settings from "../Components/Admin/Settings";
 import "../Styles/admin/Admin.css";
 import AdminHome from "../Pages/admin/AdminHome";
 import AdminAbout from "../Pages/admin/AdminAbout";
@@ -14,7 +13,6 @@ function Admin() {
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
       <BrowserRouter>
         <Header />
-        <Settings />
 
         <div class="app-main">
           <Sidebar />

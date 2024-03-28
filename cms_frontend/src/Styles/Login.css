@@ -1,0 +1,19 @@
+.bg-login-image {
+  background: url("../Assets/Login-3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+form.user .custom-checkbox.small label {
+  line-height: 1.5rem;
+}
+form.user .form-control-user {
+  font-size: 0.8rem;
+  border-radius: 10rem;
+  padding: 1.5rem 1rem;
+}
+form.user .btn-user {
+  font-size: 0.8rem;
+  border-radius: 10rem;
+  padding: 0.75rem 1rem;
+}
