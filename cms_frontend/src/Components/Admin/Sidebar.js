@@ -20,9 +20,12 @@ function Sidebar() {
         title: "Pages",
         icon: <CgWebsite class="metismenu-icon" />,
         subMenus: [
+          { title: "Common", path: "/admin/common" },
           { title: "Home", path: "/admin/home" },
           { title: "About", path: "/admin/about" },
           { title: "Service", path: "/admin/service" },
+          { title: "Why Choose Us", path: "/admin/whychooseus" },
+          { title: "Legal", path: "/admin/legal" },
         ],
       },
       // Add other menu items similarly

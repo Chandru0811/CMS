@@ -5,10 +5,13 @@ import Content from "../Components/Admin/Content";
 import Footer from "../Components/Admin/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "../Styles/admin/Admin.css";
+import AdminCommon from "../Pages/admin/AdminCommon";
 import AdminHome from "../Pages/admin/AdminHome";
 import AdminAbout from "../Pages/admin/AdminAbout";
-import { ToastContainer } from "react-toastify";
 import AdminService from "../Pages/admin/AdminService";
+import AdminWhyChooseUs from "../Pages/admin/AdminWhyChooseUs";
+import AdminLegal from "../Pages/admin/AdminLegal";
+import { ToastContainer } from "react-toastify";
 import Doctor from "../Pages/admin/Doctor/Doctor";
 import DoctorAdd from "../Pages/admin/Doctor/DoctorAdd";
 import DoctorEdit from "../Pages/admin/Doctor/DoctorEdit";
@@ -34,9 +37,12 @@ function Admin({ handleLogout }) {
             <div className="minHeight">
               <Routes>
                 <Route path="/" element={<Content />} />
+                <Route path="/admin/common" element={<AdminCommon />} />
                 <Route path="/admin/home" element={<AdminHome />} />
                 <Route path="/admin/about" element={<AdminAbout />} />
                 <Route path="/admin/service" element={<AdminService />} />
+                <Route path="/admin/whychooseus" element={<AdminWhyChooseUs/>}/>
+                <Route path="/admin/legal" element={<AdminLegal />} />
 
                 {/* Doctor  */}
                 <Route path="/admin/doctor" element={<Doctor />} />
