@@ -1,89 +1,164 @@
-import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuid } from "uuid";
-import profiles from "./Profiles";
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { FaStar } from "react-icons/fa";
 
 function DoctorAdd() {
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [star, setStar] = useState("");
-  const [image, setImage] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState();
 
-  let navigate = useNavigate();
+  const validationSchema = Yup.object({
+    doctorName: Yup.string().required("*Name is required"),
+    doctorImage: Yup.string().required("*Doctor image is required"),
+    doctorTitle: Yup.string().required("*Title is required"),
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      doctorName: "",
+      doctorTitle: "",
+      doctorImage: "",
+      rating: null,
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      console.log(values);
+    },
+  });
 
-    const ids = uuid();
-    let uniqueId = ids.slice(0, 8);
+  const [show, setShow] = useState(false);
 
-    profiles.push({
-      id: uniqueId,
-      name: name,
-      title: title,
-      stars: star,
-      image: image ? image.name : "",
-    });
-    navigate("/admin/doctor");
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-  };
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
-    <div>
-      <Form className="d-grid gap-2" style={{ margin: "15rem" }}>
-        <Form.Group className="mb-3" controlId="formName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Name"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Title"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formStars">
-          <Form.Label>Stars</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Rating"
-            required
-            value={star}
-            onChange={(e) => setStar(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formImage">
-          <Form.Label>Image</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image"
-            onChange={handleImageChange}
-          />
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={(e) => handleSubmit(e)}
-        >
-          Submit
-        </Button>
-      </Form>
-    </div>
+    <>
+      <button
+        onClick={handleShow}
+        type="button"
+        className="btn btn-outline-primary"
+      >
+        Add
+      </button>
+
+      <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Doctor Add</Modal.Title>
+        </Modal.Header>
+        <form onSubmit={formik.handleSubmit}>
+          <Modal.Body>
+            <div className="row">
+              <div className="col-md-6 col-12 mb-3">
+                <label className="form-label">
+                  Doctor Image<span className="text-danger">*</span>
+                </label>
+                <input
+                  type="file"
+                  {...formik.getFieldProps("doctorImage")}
+                  className={`form-control ${
+                    formik.touched.doctorImage && formik.errors.doctorImage
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                />
+                {formik.touched.doctorImage && formik.errors.doctorImage && (
+                  <div className="invalid-feedback">
+                    {formik.errors.doctorImage}
+                  </div>
+                )}
+              </div>
+              <div className="col-md-6 col-12 mb-3">
+                <label className="form-label">
+                  Name<span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...formik.getFieldProps("doctorName")}
+                  className={`form-control ${
+                    formik.touched.doctorName && formik.errors.doctorName
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                />
+                {formik.touched.doctorName && formik.errors.doctorName && (
+                  <div className="invalid-feedback">
+                    {formik.errors.doctorName}
+                  </div>
+                )}
+              </div>
+              <div className="col-md-6 col-12 mb-2">
+                <lable className="form-lable">
+                  Title<span className="text-danger">*</span>
+                </lable>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    name="doctorTitle"
+                    className={`form-control  ${
+                      formik.touched.doctorTitle && formik.errors.doctorTitle
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    {...formik.getFieldProps("doctorTitle")}
+                  />
+                  {formik.touched.doctorTitle && formik.errors.doctorTitle && (
+                    <div className="invalid-feedback">
+                      {formik.errors.doctorTitle}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className="col-md-6 col-12 mb-2">
+                Rating: {rating}
+                <br />
+                {[...Array(5)].map((star, index) => {
+                  const ratingValue = index + 1;
+
+                  return (
+                    <label key={index}>
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={ratingValue}
+                        onClick={() => {
+                          setRating(ratingValue);
+                          formik.setFieldValue("rating", ratingValue);
+                        }}
+                        style={{ visibility: "hidden" }}
+                      />
+                      <FaStar
+                        className="star"
+                        color={
+                          ratingValue <= (hover || rating)
+                            ? "#ffc107"
+                            : "#e4e5e9"
+                        }
+                        size={25}
+                        onMouseEnter={() => setHover(ratingValue)}
+                        onMouseLeave={() => setHover(null)}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={handleClose}
+            >
+              Close
+            </button>
+            <button type="submit" className="btn btn-danger">
+              Save
+            </button>
+          </Modal.Footer>
+        </form>
+      </Modal>
+    </>
   );
 }
 

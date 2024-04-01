@@ -1,25 +1,49 @@
-import React from "react";
-import { Card, Button } from "react-bootstrap";
-import { FaArrowLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { FaEye } from "react-icons/fa";
+import Modal from "react-bootstrap/Modal";
 
-function DoctorView({ doctor }) {
+function DoctorView() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={doctor.image} />
-        <Card.Body>
-          <Card.Title>{doctor.name}</Card.Title>
-          <Card.Text>{doctor.title}</Card.Text>
-          <Card.Text>{doctor.stars}</Card.Text>
-          <Link to="/admin/doctor">
-            <Button variant="secondary">
-              <FaArrowLeft /> Back to List
-            </Button>
-          </Link>
-        </Card.Body>
-      </Card>
-    </div>
+    <>
+      <span onClick={handleShow}>
+        <FaEye />
+      </span>
+
+      <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Body>
+          <div className="row m-5">
+            <div class="card" style={{ width: "18rem" }}>
+              <img
+                class="card-img-top"
+                src="http://localhost:3000/static/media/profile-1.0261bb4efe7a9075c56a.png"
+                alt="img1"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Dr. Kathryn Murphy</h5>
+                <p class="card-text">General Surgeons</p>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-secondary"
+            type="button"
+            onClick={handleClose}
+          >
+            Close
+          </button>
+          <button type="submit" className="btn btn-danger">
+            Save
+          </button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
 
