@@ -1,108 +1,193 @@
-import React, { Fragment } from "react";
-import { Button, Table } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Link, useNavigate } from "react-router-dom";
-import Profiles from "./Profiles";
-import { FaTrash, FaEdit, FaEye } from "react-icons/fa";
+import React from "react";
+import { Link } from "react-router-dom";
+import { MdDelete } from "react-icons/md";
+import DoctorAdd from "./DoctorAdd";
+import DoctorView from "./DoctorView";
+import DoctorEdit from "./DoctorEdit";
+import { FaStar } from "react-icons/fa6";
 
 function Doctor() {
-  const navigate = useNavigate();
-
-  const handleEdit = (id, name, title, stars) => {
-    localStorage.setItem("name", name);
-    localStorage.setItem("title", title);
-    localStorage.setItem("star", stars);
-    localStorage.setItem("id", id);
-  };
-
-  const handleDelete = (id) => {
-    var index = Profiles.map(function (e) {
-      return e.id;
-    }).indexOf(id);
-    Profiles.splice(index, 1);
-    navigate("/admin/doctor");
-  };
-
   return (
-    <Fragment>
-      <div style={{ margin: "3rem" }}>
-        <Table striped bordered hover size="sm">
-          <thead>
-            <tr className="text-center">
-              <th>Image</th>
-              <th>Name</th>
-              <th>Title</th>
-              <th>Stars</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Profiles && Profiles.length > 0
-              ? Profiles.map((item) => {
-                  return (
-                    <tr key={item.id} className="text-center">
-                      <td>
-                        <img
-                          src={`${item.image}`}
-                          alt={item.name}
-                          style={{ width: "50px", height: "50px" }}
-                        />
-                      </td>
-                      <td>{item.name}</td>
-                      <td>{item.title}</td>
-                      <td>{item.stars}</td>
-                      <td>
-                        <span>
-                          <Link to={`/admin/doctor/view/${item.id}`}>
-                            <Button
-                              variant="warning"
-                              style={{ margin: "1rem" }}
-                            >
-                              <FaEye />
-                            </Button>
-                          </Link>
-                        </span>
-                        <span>
-                          <Link to="/admin/doctor/edit">
-                            <Button
-                              variant="primary"
-                              style={{ margin: "1rem" }}
-                              onClick={() =>
-                                handleEdit(
-                                  item.id,
-                                  item.name,
-                                  item.title,
-                                  item.stars
-                                )
-                              }
-                            >
-                              <FaEdit />
-                            </Button>
-                          </Link>
-                        </span>
-                        <span>
-                          <Button
-                            variant="danger"
-                            style={{ margin: "1rem" }}
-                            onClick={() => handleDelete(item.id)}
-                          >
-                            <FaTrash />
-                          </Button>
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })
-              : "No data availabe"}
-          </tbody>
-        </Table>
-        <Link to="/admin/doctor/add">
-          <Button variant="primary" style={{ margin: "1rem" }}>
-            Add New Card
-          </Button>
-        </Link>
+    <section className="container my-4">
+      <div className="card shadow border-0 mb-2 top-header">
+        <div className="container-fluid py-4">
+          <div className="row align-items-center justify-content-between ">
+            <div className="col">
+              <div className="d-flex align-items-center gap-4">
+                <h1 className="h4 ls-tight">Doctor</h1>
+              </div>
+            </div>
+            <div className="col-auto">
+              <div className="hstack gap-2 justify-content-end">
+                <DoctorAdd />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </Fragment>
+      <div className="card shadow border-0 mb-2 top-header">
+        <div className="container py-4">
+          <div className="row g-3">
+            <div className="table-responsive p-2">
+              <table class="table">
+                <thead>
+                  <tr className="text-center">
+                    <th scope="col">S.No</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="text-center">
+                    <td>1</td>
+                    <td>
+                      <img
+                        style={{ height: "4rem" }}
+                        src="http://localhost:3000/static/media/profile-1.0261bb4efe7a9075c56a.png"
+                        alt="img1"
+                      />
+                    </td>
+                    <td>Dr. Kathryn Murphy</td>
+                    <td>General Surgeons</td>
+                    <td>
+                      4.7
+                      <FaStar className="text-warning mb-1" />
+                    </td>
+                    <td>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorView />
+                        </button>
+                      </span>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorEdit />
+                        </button>
+                      </span>
+                      <span>
+                        <Link to="/">
+                          <button className="btn btn-sm shadow-none border-none">
+                            <MdDelete />
+                          </button>
+                        </Link>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="text-center">
+                    <td>2</td>
+                    <td>
+                      <img
+                        style={{ height: "4rem" }}
+                        src="http://localhost:3000/static/media/profile-3.530bb2fd7ece3dd3b3be.png"
+                        alt="img2"
+                      />
+                    </td>
+                    <td>Dr. Jacob Jones</td>
+                    <td>Hematologists</td>
+                    <td>
+                      4.9
+                      <FaStar className="text-warning mb-1" />
+                    </td>
+                    <td>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorView />
+                        </button>
+                      </span>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorEdit />
+                        </button>
+                      </span>
+                      <span>
+                        <Link to="/">
+                          <button className="btn btn-sm shadow-none border-none">
+                            <MdDelete />
+                          </button>
+                        </Link>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="text-center">
+                    <td>3</td>
+                    <td>
+                      <img
+                        style={{ height: "4rem" }}
+                        src="http://localhost:3000/static/media/profile-2.4752a9db34458eeffcfa.png"
+                        alt="img3"
+                      />
+                    </td>
+                    <td>Dr. Jenny Wilson</td>
+                    <td>Endocrinologists</td>
+                    <td>
+                      4.5
+                      <FaStar className="text-warning mb-1" />
+                    </td>
+                    <td>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorView />
+                        </button>
+                      </span>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorEdit />
+                        </button>
+                      </span>
+                      <span>
+                        <Link to="/">
+                          <button className="btn btn-sm shadow-none border-none">
+                            <MdDelete />
+                          </button>
+                        </Link>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="text-center">
+                    <td>4</td>
+                    <td>
+                      <img
+                        style={{ height: "4rem" }}
+                        src="http://localhost:3000/static/media/profile-4.3c44185ab9c84614038f.png"
+                        alt="img4"
+                      />
+                    </td>
+                    <td>Dr. Albert Flores</td>
+                    <td>Hematologists</td>
+                    <td>
+                      3.9
+                      <FaStar className="text-warning mb-1" />
+                    </td>
+                    <td>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorView />
+                        </button>
+                      </span>
+                      <span>
+                        <button className="btn btn-sm shadow-none border-none">
+                          <DoctorEdit />
+                        </button>
+                      </span>
+                      <span>
+                        <Link to="/">
+                          <button className="btn btn-sm shadow-none border-none">
+                            <MdDelete />
+                          </button>
+                        </Link>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
