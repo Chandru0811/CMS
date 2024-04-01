@@ -2,7 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css'; 
+import 'quill/dist/quill.snow.css';
 
 function AdminHome() {
 
@@ -64,16 +64,11 @@ function AdminHome() {
             <label className="form-label">
               Content<span className="text-danger">*</span>
             </label>
-            <div>
-                        <div ref={quillRef} style={{ height: "150px" }} 
-                        {...formik.getFieldProps('content')}/>
-                    </div>
-            {/* <textarea rows="5"
-              {...formik.getFieldProps('content')}
-              className={`form-control ${formik.touched.content && formik.errors.content ? "is-invalid" : ""}`} ></textarea>
+            <textarea ref={quillRef} style={{ height: "150px" }} className={`form-control ${formik.touched.content && formik.errors.content ? "is-invalid" : ""}`}
+              {...formik.getFieldProps('content')} />
             {formik.touched.content && formik.errors.content && (
               <div className="invalid-feedback">{formik.errors.content}</div>
-            )} */}
+            )}
           </div>
           <div className="col-md-6 col-12 mb-3">
             <label className="form-label">
