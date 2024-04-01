@@ -1,8 +1,12 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css'; 
 
 function AdminHome() {
+
+  const { quill, quillRef } = useQuill();
 
   const validationSchema = Yup.object({
     subHeading: Yup.string().required("*Sub heading is required"),
@@ -60,12 +64,16 @@ function AdminHome() {
             <label className="form-label">
               Content<span className="text-danger">*</span>
             </label>
-            <textarea rows="5"
+            <div>
+                        <div ref={quillRef} style={{ height: "150px" }} 
+                        {...formik.getFieldProps('content')}/>
+                    </div>
+            {/* <textarea rows="5"
               {...formik.getFieldProps('content')}
               className={`form-control ${formik.touched.content && formik.errors.content ? "is-invalid" : ""}`} ></textarea>
             {formik.touched.content && formik.errors.content && (
               <div className="invalid-feedback">{formik.errors.content}</div>
-            )}
+            )} */}
           </div>
           <div className="col-md-6 col-12 mb-3">
             <label className="form-label">
