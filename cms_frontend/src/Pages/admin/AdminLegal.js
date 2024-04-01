@@ -1,8 +1,13 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
+import { useQuill } from 'react-quilljs';
+import 'quill/dist/quill.snow.css';
 
 function AdminLegal() {
+
+    const { quill: generalInfoQuill, quillRef: generalInfoQuillRef } = useQuill();
+    const { quill: privacyPolicyQuill, quillRef: privacyPolicyQuillRef } = useQuill();
 
     const validationSchema = Yup.object({
         generalInfo: Yup.string().required("*General info is required"),
@@ -32,7 +37,7 @@ function AdminLegal() {
                 <form className="row g-3" onSubmit={formik.handleSubmit}>
                     <div className="col-12 mb-3">
                         <label className='form-label'>General Info<span className='text-danger'>*</span></label>
-                        <textarea rows="5"
+                        <textarea rows="5" ref={generalInfoQuillRef}
                             {...formik.getFieldProps('generalInfo')}
                             className={`form-control ${formik.touched.generalInfo && formik.errors.generalInfo ? "is-invalid" : ""}`} />
                         {formik.touched.generalInfo && formik.errors.generalInfo && (
@@ -41,7 +46,7 @@ function AdminLegal() {
                     </div>
                     <div className="col-12 mb-3">
                         <label className='form-label'>Privacy Policy<span className='text-danger'>*</span></label>
-                        <textarea rows="5"
+                        <textarea rows="5" ref={privacyPolicyQuillRef}
                             {...formik.getFieldProps('privacyPolicy')}
                             className={`form-control ${formik.touched.privacyPolicy && formik.errors.privacyPolicy ? "is-invalid" : ""}`} />
                         {formik.touched.privacyPolicy && formik.errors.privacyPolicy && (
