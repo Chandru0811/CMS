@@ -5,7 +5,6 @@ import * as Yup from "yup";
 function AdminHome() {
 
   const validationSchema = Yup.object({
-    // type: Yup.string().required("*Select a type"),
     subHeading: Yup.string().required("*Sub heading is required"),
     heading: Yup.string().required("*Heading is required"),
     content: Yup.string().required("*Content is required"),

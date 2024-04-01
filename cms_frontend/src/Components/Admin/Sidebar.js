@@ -18,7 +18,7 @@ function Sidebar() {
     const updatedMenuItems = [
       {
         title: "Pages",
-        icon: <CgWebsite class="metismenu-icon" />,
+        icon: <CgWebsite className="metismenu-icon" />,
         subMenus: [
           { title: "Common", path: "/admin/common" },
           { title: "Home", path: "/admin/home" },
@@ -38,67 +38,67 @@ function Sidebar() {
     setActiveMenu(activeMenu === title ? null : title);
   };
   return (
-    <div class="app-sidebar sidebar-shadow">
-      <div class="app-header__logo">
-        <div class="logo-src">
+    <div className="app-sidebar sidebar-shadow">
+      <div className="app-header__logo">
+        <div className="logo-src">
           <img src={Logo} alt="logo" className="img-fluid" />
         </div>
-        <div class="header__pane ml-auto">
+        <div className="header__pane ml-auto">
           <div>
             <button
               type="button"
-              class="hamburger close-sidebar-btn hamburger--elastic"
-              data-class="closed-sidebar"
+              className="hamburger close-sidebar-btn hamburger--elastic"
+              data-className="closed-sidebar"
             >
-              <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
+              <span className="hamburger-box">
+                <span className="hamburger-inner"></span>
               </span>
             </button>
           </div>
         </div>
       </div>
-      <div class="app-header__mobile-menu">
+      <div className="app-header__mobile-menu">
         <div>
           <button
             type="button"
-            class="hamburger hamburger--elastic mobile-toggle-nav"
+            className="hamburger hamburger--elastic mobile-toggle-nav"
           >
-            <span class="hamburger-box">
-              <span class="hamburger-inner"></span>
+            <span className="hamburger-box">
+              <span className="hamburger-inner"></span>
             </span>
           </button>
         </div>
       </div>
-      <div class="app-header__menu">
+      <div className="app-header__menu">
         <span>
           <button
             type="button"
-            class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav"
+            className="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav"
           >
-            <span class="btn-icon-wrapper">
-              <i class="fa fa-ellipsis-v fa-w-6"></i>
+            <span className="btn-icon-wrapper">
+              <i className="fa fa-ellipsis-v fa-w-6"></i>
             </span>
           </button>
         </span>
       </div>
-      <div class="scrollbar-sidebar">
-        <div class="app-sidebar__inner">
+      <div className="scrollbar-sidebar">
+        <div className="app-sidebar__inner">
           <ul className="vertical-nav-menu mt-4">
             <li>
               <NavLink to="/" activeClassName="active">
-                <MdOutlineDashboardCustomize class="metismenu-icon" />
+                <MdOutlineDashboardCustomize className="metismenu-icon" />
                 Dashboard
               </NavLink>
             </li>
             <li>
               <NavLink to="/admin/review" activeClassName="active">
-                <MdOutlineRateReview class="metismenu-icon" />
+                <MdOutlineRateReview className="metismenu-icon" />
                 Review
               </NavLink>
             </li>
             <li>
               <NavLink to="/admin/doctor" activeClassName="active">
-                <FaStethoscope class="metismenu-icon" />
+                <FaStethoscope className="metismenu-icon" />
                 Doctors
               </NavLink>
             </li>
@@ -113,7 +113,7 @@ function Sidebar() {
                     >
                       {item.icon}
                       <span>{item.title}</span>
-                      <i class="metismenu-state-icon fa-solid fa-angle-down caret-left"></i>
+                      <i className="metismenu-state-icon fa-solid fa-angle-down caret-left"></i>
                     </a>
                     <Collapse in={activeMenu === item.title}>
                       <ul className="submenu">
