@@ -155,7 +155,7 @@ function AdminWhyChooseUs() {
                     </div>
                     <div className="col d-flex justify-content-end align-items-end">
                         <div className="mb-3">
-                            <button type="submit" className="btn btn-primary btn-lg">Update</button>
+                            <button type="submit" className="btn btn-primary">Update</button>
                         </div>
                     </div>
                 </form>
